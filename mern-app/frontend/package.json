@@ -1,24 +1,22 @@
 {
-  "name": "mern-app-frontend",
+  "name": "booklog-frontend",
   "version": "1.0.0",
   "description": "Frontend for the MERN stack application",
   "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^0.21.4",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3"
+    "axios": "^1.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "vite": "^7.0.4"
+    "vite": "^4.0.0"
   }
 }
