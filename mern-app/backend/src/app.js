@@ -1,26 +1,35 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
+const morgan = require('morgan');
 const dotenv = require('dotenv');
-const itemRoutes = require('./routes/items');
+const bookRoutes = require('./routes/bookRoutes');
+const logger = require('./utils/logger');
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-
-// Middleware
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.error('MongoDB connection error:', err));
-
-// Routes
-app.use('/api/items', itemRoutes);
-
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', uptime: process.uptime() });
 });
+
+// Book routes
+app.use('/api/books', bookRoutes);
+
+// Error handler
+app.use((err, req, res, next) => {
+  logger.error(err.message);
+  res.status(500).json({ error: err.message });
+});
+
+const PORT = process.env.PORT || 5000;
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
+  })
+  .catch(err => logger.error('MongoDB connection error:', err));
