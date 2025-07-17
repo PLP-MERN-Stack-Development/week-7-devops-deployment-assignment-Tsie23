@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import BookList from './components/BookList';
-import AddBookForm from './components/AddBookForm';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { getBooks, addBook, updateBook, deleteBook } from './api/books';
+
+const BookList = lazy(() => import('./components/BookList'));
+const AddBookForm = lazy(() => import('./components/AddBookForm'));
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -46,14 +47,18 @@ function App() {
   return (
     <div style={{ maxWidth: 600, margin: 'auto', padding: 20 }}>
       <h1>📚 Book Log</h1>
-      <AddBookForm onAdd={handleAddBook} />
-      <BookList
-        books={books}
-        onEdit={setEditingBook}
-        onDelete={handleDeleteBook}
-        onUpdate={handleUpdateBook}
-        editingBook={editingBook}
-      />
+      <Suspense fallback={<div>Loading form...</div>}>
+        <AddBookForm onAdd={handleAddBook} />
+      </Suspense>
+      <Suspense fallback={<div>Loading books...</div>}>
+        <BookList
+          books={books}
+          onEdit={setEditingBook}
+          onDelete={handleDeleteBook}
+          onUpdate={handleUpdateBook}
+          editingBook={editingBook}
+        />
+      </Suspense>
     </div>
   );
 }

@@ -1,6 +1,36 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=19936034&assignment_repo_type=AssignmentRepo)
 # Deployment and DevOps for MERN Applications
 
+## 🚀 Deployed Application URLs
+- **Frontend:** [YOUR FRONTEND URL HERE]
+- **Backend API:** [YOUR BACKEND URL HERE]
+
+## 📊 Monitoring Setup
+Describe your monitoring setup here. For example:
+- Health check endpoint: `/health` (backend)
+- Uptime monitoring: [e.g., UptimeRobot, GitHub Actions health check]
+- Error tracking: [e.g., Sentry, if used]
+- Performance monitoring: [e.g., Vercel/Netlify analytics, if used]
+
+## 🛠️ CI/CD Pipeline
+- GitHub Actions workflows are set up for build, test, lint, and deploy for both frontend and backend.
+- Health checks are performed after deployment.
+
+### CI/CD Pipeline Screenshots
+Add screenshots of your GitHub Actions pipeline in action here. To get screenshots:
+1. Go to your repository on GitHub.
+2. Click the "Actions" tab.
+3. Click on a workflow run and take a screenshot of the summary and steps.
+4. Add the images to a `/screenshots` folder and reference them here:
+   - ![CI/CD Screenshot 1](./screenshots/ci-cd-1.png)
+   - ![CI/CD Screenshot 2](./screenshots/ci-cd-2.png)
+
+## 📝 Deployment & Maintenance Notes
+- See `Week7-Assignment.md` for full requirements and instructions.
+- See `/booklog/backend/README.md` and `/booklog/frontend/README.md` for setup and usage details.
+
+---
+
 This assignment focuses on deploying a full MERN stack application to production, implementing CI/CD pipelines, and setting up monitoring for your application.
 
 ## Assignment Overview

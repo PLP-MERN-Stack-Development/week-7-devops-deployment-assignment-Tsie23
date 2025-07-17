@@ -5,11 +5,18 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const bookRoutes = require('./routes/bookRoutes');
 const logger = require('./utils/logger');
+const helmet = require('helmet');
 
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(helmet());
+
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  credentials: true
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(morgan('dev'));
 
