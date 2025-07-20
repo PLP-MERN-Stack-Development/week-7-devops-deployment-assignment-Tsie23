@@ -1,6 +1,6 @@
 # 📚 MERN Book Log – Fullstack Deployment & DevOps
 
-A full MERN stack application for logging books, demonstrating production deployment, CI/CD, environment configuration, and monitoring.
+A full MERN stack application for logging books, demonstrating production deployment, CI/CD, environment configuration, monitoring, and error tracking.
 
 ---
 
@@ -26,11 +26,11 @@ week-7-devops-deployment-assignment-Tsie23/
 
 ## 🧩 Tech Stack
 
-- **Frontend:** React 18, Vite, Axios, Code Splitting (React.lazy/Suspense)
-- **Backend:** Node.js, Express, MongoDB (Atlas), Mongoose, Helmet, Morgan, CORS, dotenv
+- **Frontend:** React 18, Vite, Axios, Code Splitting (React.lazy/Suspense), TailwindCSS, Sentry
+- **Backend:** Node.js, Express, MongoDB (Atlas), Mongoose, Helmet, Morgan, CORS, dotenv, Sentry
 - **CI/CD:** GitHub Actions (build, lint, test, deploy, health checks)
 - **Deployment:** Render (backend), Vercel (frontend)
-- **Monitoring:** Health check endpoint, GitHub Actions health checks
+- **Monitoring:** Health check endpoint, GitHub Actions health checks, Sentry error tracking
 
 ---
 
@@ -52,16 +52,18 @@ pnpm install --filter ./frontend...
 
 #### Backend (`backend/.env`)
 ```
-MONGO_URI=mongodb+srv://root:kasTsie231$@cluster-1.wmb8nql.mongodb.net/booklog?retryWrites=true&w=majority&appName=Cluster-1
+MONGO_URI=your_mongo_atlas_connection_string
 PORT=5000
 JWT_SECRET=your_generated_jwt_secret
 NODE_ENV=production
 CORS_ORIGIN=https://your-frontend-url.vercel.app
+SENTRY_DSN=your_sentry_dsn_here
 ```
 
 #### Frontend (`frontend/.env`)
 ```
 VITE_API_URL=https://your-backend-url.onrender.com/api/books
+VITE_SENTRY_DSN=your_sentry_dsn_here
 ```
 
 > **Note:** Do not commit your real `.env` files. Only commit `.env.example` with placeholder values.
@@ -101,7 +103,8 @@ pnpm dev
 1. Push your code to GitHub.
 2. Import your frontend repo to [Vercel](https://vercel.com/).
 3. Set environment variable `VITE_API_URL` to your Render backend URL.
-4. Deploy and copy your Vercel frontend URL.
+4. Set environment variable `VITE_SENTRY_DSN` to your Sentry DSN.
+5. Deploy and copy your Vercel frontend URL.
 
 ---
 
@@ -112,7 +115,7 @@ pnpm dev
 
 ---
 
-## 🩺 Monitoring & Health Checks
+## 🩺 Monitoring, Health Checks & Error Tracking
 
 - **Health Check Endpoint:**  
   `GET /api/health` returns `{ status: 'ok', uptime: ... }`
@@ -122,6 +125,10 @@ pnpm dev
   All requests are logged using Morgan; errors are logged to the console.
 - **Security:**  
   Helmet sets secure HTTP headers; CORS is restricted to your frontend domain.
+- **Error Tracking (Sentry):**
+  - **Backend:** Sentry is initialized in `backend/index.js` using `SENTRY_DSN` from environment variables. All unhandled errors are reported to Sentry.
+  - **Frontend:** Sentry is initialized in `frontend/src/index.js` using `VITE_SENTRY_DSN` from environment variables. Errors and performance issues are tracked automatically.
+  - Get your DSN from [Sentry.io](https://sentry.io/) after creating a project.
 
 ---
 
@@ -146,6 +153,8 @@ _Add screenshots of your GitHub Actions pipeline here:_
 
 - `GET /api/books` – List all books
 - `POST /api/books` – Add a new book
+- `PUT /api/books/:id` – Update a book (including status)
+- `DELETE /api/books/:id` – Remove a book
 - `GET /api/health` – Health check
 
 ---
@@ -155,6 +164,7 @@ _Add screenshots of your GitHub Actions pipeline here:_
 - Update dependencies regularly (`pnpm update`)
 - Monitor logs on Render and Vercel dashboards
 - Back up your MongoDB Atlas data as needed
+- Review Sentry for error and performance monitoring
 
 ---
 
@@ -164,6 +174,7 @@ _Add screenshots of your GitHub Actions pipeline here:_
 - [Render Docs](https://render.com/docs)
 - [Vercel Docs](https://vercel.com/docs)
 - [GitHub Actions Docs](https://docs.github.com/en/actions)
+- [Sentry Docs](https://docs.sentry.io/)
 
 ---
 

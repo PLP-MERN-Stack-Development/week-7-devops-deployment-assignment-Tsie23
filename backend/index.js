@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const cors = require('cors');
+const Sentry = require('@sentry/node');
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(cors({
   origin: process.env.CORS_ORIGIN || '*',
 }));
+app.use(Sentry.Handlers.requestHandler());
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -68,6 +70,7 @@ app.put('/api/books/:id', async (req, res, next) => {
   }
 });
 
+app.use(Sentry.Handlers.errorHandler());
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
