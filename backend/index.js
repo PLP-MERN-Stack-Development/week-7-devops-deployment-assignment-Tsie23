@@ -25,6 +25,11 @@ const bookSchema = new mongoose.Schema({
   title: String,
   author: String,
   year: Number,
+  status: {
+    type: String,
+    enum: ['Started', 'In Progress', 'Complete'],
+    default: 'Started',
+  },
 });
 const Book = mongoose.model('Book', bookSchema);
 
@@ -39,9 +44,25 @@ app.get('/api/books', async (req, res, next) => {
 
 app.post('/api/books', async (req, res, next) => {
   try {
-    const book = new Book(req.body);
+    const book = new Book({
+      ...req.body,
+      status: req.body.status || 'Started',
+    });
     await book.save();
     res.status(201).json(book);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.put('/api/books/:id', async (req, res, next) => {
+  try {
+    const updated = await Book.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.json(updated);
   } catch (err) {
     next(err);
   }

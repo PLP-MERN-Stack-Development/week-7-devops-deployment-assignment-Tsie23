@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 const initialState = {
   title: '',
   author: '',
-  year: ''
+  year: '',
+  status: 'Started',
 };
 
 const AddBookForm = ({ onAdd }) => {
@@ -21,7 +22,7 @@ const AddBookForm = ({ onAdd }) => {
     try {
       const bookData = {
         ...form,
-        year: form.year ? Number(form.year) : undefined
+        year: form.year ? Number(form.year) : undefined,
       };
       await onAdd(bookData);
       setForm(initialState);
@@ -31,19 +32,21 @@ const AddBookForm = ({ onAdd }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
+    <form onSubmit={handleSubmit} className="mb-6 p-4 bg-white rounded shadow flex flex-col gap-2">
       <input
         name="title"
         value={form.title}
         onChange={handleChange}
         placeholder="Title"
         required
+        className="border p-2 rounded"
       />
       <input
         name="author"
         value={form.author}
         onChange={handleChange}
         placeholder="Author"
+        className="border p-2 rounded"
       />
       <input
         name="year"
@@ -52,9 +55,20 @@ const AddBookForm = ({ onAdd }) => {
         placeholder="Year (optional)"
         type="number"
         min="0"
+        className="border p-2 rounded"
       />
-      <button type="submit">Add Book</button>
-      {error && <div style={{ color: 'red' }}>Error: {error}</div>}
+      <select
+        name="status"
+        value={form.status}
+        onChange={handleChange}
+        className="border p-2 rounded"
+      >
+        <option value="Started">Started</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Complete">Complete</option>
+      </select>
+      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Book</button>
+      {error && <div className="text-red-600">Error: {error}</div>}
     </form>
   );
 };

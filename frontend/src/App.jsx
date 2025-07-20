@@ -45,20 +45,22 @@ function App() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div style={{ maxWidth: 600, margin: 'auto', padding: 20 }}>
-      <h1>📚 Book Log</h1>
-      <Suspense fallback={<div>Loading form...</div>}>
-        <AddBookForm onAdd={handleAddBook} />
-      </Suspense>
-      <Suspense fallback={<div>Loading books...</div>}>
-        <BookList
-          books={books}
-          onEdit={setEditingBook}
-          onDelete={handleDeleteBook}
-          onUpdate={handleUpdateBook}
-          editingBook={editingBook}
-        />
-      </Suspense>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-start py-8 px-2">
+      <div className="w-full max-w-xl">
+        <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">📚 Book Log</h1>
+        <Suspense fallback={<div>Loading form...</div>}>
+          <AddBookForm onAdd={handleAddBook} />
+        </Suspense>
+        <Suspense fallback={<div>Loading books...</div>}>
+          <BookList
+            books={books}
+            onEdit={setEditingBook}
+            onDelete={handleDeleteBook}
+            onUpdate={handleUpdateBook}
+            editingBook={editingBook}
+          />
+        </Suspense>
+      </div>
     </div>
   );
 }
