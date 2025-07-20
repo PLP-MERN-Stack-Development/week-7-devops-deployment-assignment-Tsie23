@@ -14,7 +14,10 @@ function BookList({ books, onEdit, onDelete, onUpdate, editingBook }) {
 
   const handleEditSubmit = e => {
     e.preventDefault();
-    onUpdate(editForm._id, editForm);
+    onUpdate(editForm._id, {
+      ...editForm,
+      year: editForm.year ? Number(editForm.year) : undefined
+    });
   };
 
   return (
@@ -25,23 +28,14 @@ function BookList({ books, onEdit, onDelete, onUpdate, editingBook }) {
             <form onSubmit={handleEditSubmit}>
               <input name="title" value={editForm.title} onChange={handleEditChange} required />
               <input name="author" value={editForm.author} onChange={handleEditChange} />
-              <select name="rating" value={editForm.rating} onChange={handleEditChange}>
-                {[1,2,3,4,5].map(r => <option key={r} value={r}>{r}⭐</option>)}
-              </select>
-              <select name="status" value={editForm.status} onChange={handleEditChange}>
-                <option>Started</option>
-                <option>In Progress</option>
-                <option>Complete</option>
-              </select>
-              <input name="notes" value={editForm.notes} onChange={handleEditChange} />
+              <input name="year" value={editForm.year || ''} onChange={handleEditChange} placeholder="Year (optional)" type="number" min="0" />
               <button type="submit">Save</button>
               <button type="button" onClick={() => onEdit(null)}>Cancel</button>
             </form>
           ) : (
             <>
               <strong>{book.title}</strong> by {book.author || 'Unknown'}<br />
-              Rating: {book.rating}⭐ | Status: {book.status}<br />
-              Notes: {book.notes}<br />
+              {book.year && <>Year: {book.year}<br /></>}
               <button onClick={() => onEdit(book)}>Edit</button>
               <button onClick={() => onDelete(book._id)}>Remove Book</button>
             </>

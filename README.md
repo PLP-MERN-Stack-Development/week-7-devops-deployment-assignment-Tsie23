@@ -1,108 +1,178 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=19936034&assignment_repo_type=AssignmentRepo)
-# Deployment and DevOps for MERN Applications
+# 📚 MERN Book Log – Fullstack Deployment & DevOps
 
-## 🚀 Deployed Application URLs
-- **Frontend:** [YOUR FRONTEND URL HERE]
-- **Backend API:** [YOUR BACKEND URL HERE]
-
-## 📊 Monitoring Setup
-Describe your monitoring setup here. For example:
-- Health check endpoint: `/health` (backend)
-- Uptime monitoring: [e.g., UptimeRobot, GitHub Actions health check]
-- Error tracking: [e.g., Sentry, if used]
-- Performance monitoring: [e.g., Vercel/Netlify analytics, if used]
-
-## 🛠️ CI/CD Pipeline
-- GitHub Actions workflows are set up for build, test, lint, and deploy for both frontend and backend.
-- Health checks are performed after deployment.
-
-### CI/CD Pipeline Screenshots
-Add screenshots of your GitHub Actions pipeline in action here. To get screenshots:
-1. Go to your repository on GitHub.
-2. Click the "Actions" tab.
-3. Click on a workflow run and take a screenshot of the summary and steps.
-4. Add the images to a `/screenshots` folder and reference them here:
-   - ![CI/CD Screenshot 1](./screenshots/ci-cd-1.png)
-   - ![CI/CD Screenshot 2](./screenshots/ci-cd-2.png)
-
-## 📝 Deployment & Maintenance Notes
-- See `Week7-Assignment.md` for full requirements and instructions.
-- See `/booklog/backend/README.md` and `/booklog/frontend/README.md` for setup and usage details.
+A full MERN stack application for logging books, demonstrating production deployment, CI/CD, environment configuration, and monitoring.
 
 ---
 
-This assignment focuses on deploying a full MERN stack application to production, implementing CI/CD pipelines, and setting up monitoring for your application.
+## 🚀 Live Demo
 
-## Assignment Overview
+- **Frontend:** [YOUR FRONTEND URL HERE]
+- **Backend API:** [YOUR BACKEND URL HERE]
 
-You will:
-1. Prepare your MERN application for production deployment
-2. Deploy the backend to a cloud platform
-3. Deploy the frontend to a static hosting service
-4. Set up CI/CD pipelines with GitHub Actions
-5. Implement monitoring and maintenance strategies
+---
 
-## Getting Started
+## 🗂️ Project Structure
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Follow the setup instructions in the `Week7-Assignment.md` file
-4. Use the provided templates and configuration files as a starting point
+```
+week-7-devops-deployment-assignment-Tsie23/
+  ├── backend/         # Express.js API, MongoDB, production-ready
+  ├── frontend/        # React (Vite) SPA, code-splitting, API integration
+  ├── .github/         # GitHub Actions CI/CD workflows
+  ├── Week7-Assignment.md
+  └── README.md
+```
 
-## Files Included
+---
 
-- `Week7-Assignment.md`: Detailed assignment instructions
-- `.github/workflows/`: GitHub Actions workflow templates
-- `deployment/`: Deployment configuration files and scripts
-- `.env.example`: Example environment variable templates
-- `monitoring/`: Monitoring configuration examples
+## 🧩 Tech Stack
 
-## Requirements
+- **Frontend:** React 18, Vite, Axios, Code Splitting (React.lazy/Suspense)
+- **Backend:** Node.js, Express, MongoDB (Atlas), Mongoose, Helmet, Morgan, CORS, dotenv
+- **CI/CD:** GitHub Actions (build, lint, test, deploy, health checks)
+- **Deployment:** Render (backend), Vercel (frontend)
+- **Monitoring:** Health check endpoint, GitHub Actions health checks
 
-- A completed MERN stack application from previous weeks
-- Accounts on the following services:
-  - GitHub
-  - MongoDB Atlas
-  - Render, Railway, or Heroku (for backend)
-  - Vercel, Netlify, or GitHub Pages (for frontend)
-- Basic understanding of CI/CD concepts
+---
 
-## Deployment Platforms
+## ⚙️ Setup & Installation
 
-### Backend Deployment Options
-- **Render**: Easy to use, free tier available
-- **Railway**: Developer-friendly, generous free tier
-- **Heroku**: Well-established, extensive documentation
+### 1. **Clone the Repository**
+```bash
+git clone <your-repo-url>
+cd week-7-devops-deployment-assignment-Tsie23
+```
 
-### Frontend Deployment Options
-- **Vercel**: Optimized for React apps, easy integration
-- **Netlify**: Great for static sites, good CI/CD
-- **GitHub Pages**: Free, integrated with GitHub
+### 2. **Install Dependencies**
+```bash
+pnpm install --filter ./backend...
+pnpm install --filter ./frontend...
+```
 
-## CI/CD Pipeline
+### 3. **Environment Variables**
 
-The assignment includes templates for setting up GitHub Actions workflows:
-- `frontend-ci.yml`: Tests and builds the React application
-- `backend-ci.yml`: Tests the Express.js backend
-- `frontend-cd.yml`: Deploys the frontend to your chosen platform
-- `backend-cd.yml`: Deploys the backend to your chosen platform
+#### Backend (`backend/.env`)
+```
+MONGO_URI=mongodb+srv://root:kasTsie231$@cluster-1.wmb8nql.mongodb.net/booklog?retryWrites=true&w=majority&appName=Cluster-1
+PORT=5000
+JWT_SECRET=your_generated_jwt_secret
+NODE_ENV=production
+CORS_ORIGIN=https://your-frontend-url.vercel.app
+```
 
-## Submission
+#### Frontend (`frontend/.env`)
+```
+VITE_API_URL=https://your-backend-url.onrender.com/api/books
+```
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+> **Note:** Do not commit your real `.env` files. Only commit `.env.example` with placeholder values.
 
-1. Complete all deployment tasks
-2. Set up CI/CD pipelines with GitHub Actions
-3. Deploy both frontend and backend to production
-4. Document your deployment process in the README.md
-5. Include screenshots of your CI/CD pipeline in action
-6. Add URLs to your deployed applications
+---
 
-## Resources
+## 🏗️ Running Locally
 
-- [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [MongoDB Atlas Documentation](https://docs.atlas.mongodb.com/)
-- [Render Documentation](https://render.com/docs)
-- [Railway Documentation](https://docs.railway.app/)
-- [Vercel Documentation](https://vercel.com/docs)
-- [Netlify Documentation](https://docs.netlify.com/) 
+### **Backend**
+```bash
+cd backend
+pnpm start
+# or for development with hot reload
+pnpm dev
+```
+- Runs on `http://localhost:5000` by default.
+
+### **Frontend**
+```bash
+cd frontend
+pnpm dev
+```
+- Runs on `http://localhost:3000` by default.
+
+---
+
+## 🌐 Deployment
+
+### **Backend (Render)**
+1. Push your code to GitHub.
+2. Create a new Web Service on [Render](https://render.com/).
+3. Connect your repo, set build command to `pnpm install`, start command to `pnpm start`.
+4. Add environment variables from your `.env`.
+5. Deploy and copy your Render backend URL.
+
+### **Frontend (Vercel)**
+1. Push your code to GitHub.
+2. Import your frontend repo to [Vercel](https://vercel.com/).
+3. Set environment variable `VITE_API_URL` to your Render backend URL.
+4. Deploy and copy your Vercel frontend URL.
+
+---
+
+## 🔒 Authentication
+
+- JWT tokens are generated and verified on the backend using `JWT_SECRET`.
+- The frontend stores and sends the JWT token for authenticated requests (if implemented).
+
+---
+
+## 🩺 Monitoring & Health Checks
+
+- **Health Check Endpoint:**  
+  `GET /api/health` returns `{ status: 'ok', uptime: ... }`
+- **CI/CD Health Checks:**  
+  GitHub Actions workflow checks backend and frontend URLs after deployment.
+- **Logging:**  
+  All requests are logged using Morgan; errors are logged to the console.
+- **Security:**  
+  Helmet sets secure HTTP headers; CORS is restricted to your frontend domain.
+
+---
+
+## 🔄 CI/CD Pipeline
+
+- **Location:** `.github/workflows/mern-ci-cd.yml`
+- **Features:**
+  - Installs, lints, tests, and builds both frontend and backend
+  - Deploys backend to Render and frontend to Vercel
+  - Runs health checks after deployment
+- **How to Test:**  
+  Push any commit to `main` and check the **Actions** tab on GitHub.
+
+### **CI/CD Pipeline Screenshots**
+_Add screenshots of your GitHub Actions pipeline here:_
+- ![CI/CD Screenshot 1](./screenshots/ci-cd-1.png)
+- ![CI/CD Screenshot 2](./screenshots/ci-cd-2.png)
+
+---
+
+## 📖 API Endpoints
+
+- `GET /api/books` – List all books
+- `POST /api/books` – Add a new book
+- `GET /api/health` – Health check
+
+---
+
+## 🛠️ Maintenance
+
+- Update dependencies regularly (`pnpm update`)
+- Monitor logs on Render and Vercel dashboards
+- Back up your MongoDB Atlas data as needed
+
+---
+
+## 📝 Resources
+
+- [MongoDB Atlas Docs](https://docs.atlas.mongodb.com/)
+- [Render Docs](https://render.com/docs)
+- [Vercel Docs](https://vercel.com/docs)
+- [GitHub Actions Docs](https://docs.github.com/en/actions)
+
+---
+
+## ✍️ Author
+
+- [Your Name]
+- [Your Contact Info or Portfolio]
+
+---
+
+**Replace all placeholder URLs and add screenshots as required for your submission!**
+If you need a section for authentication, advanced monitoring, or want to document more endpoints, let me know! 

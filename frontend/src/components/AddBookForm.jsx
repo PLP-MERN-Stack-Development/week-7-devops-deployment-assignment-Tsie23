@@ -1,78 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import { fetchItems } from '../api/items';
+import React, { useState } from 'react';
 
 const initialState = {
   title: '',
   author: '',
-  rating: 1,
-  status: 'Started',
-  notes: ''
+  year: ''
 };
 
-const ItemList = () => {
-    const [items, setItems] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [form, setForm] = useState(initialState);
+const AddBookForm = ({ onAdd }) => {
+  const [form, setForm] = useState(initialState);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const getItems = async () => {
-            try {
-                const data = await fetchItems();
-                setItems(data);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setForm(f => ({ ...f, [name]: value }));
+  };
 
-        getItems();
-    }, []);
-
-    const handleChange = e => {
-        const { name, value } = e.target;
-        setForm(f => ({ ...f, [name]: value }));
-    };
-
-    const handleSubmit = e => {
-        e.preventDefault();
-        // onAdd(form); // Assuming onAdd is a function to add a new item
-        setForm(initialState);
-    };
-
-    if (loading) {
-        return <div>Loading...</div>;
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setError(null);
+    try {
+      const bookData = {
+        ...form,
+        year: form.year ? Number(form.year) : undefined
+      };
+      await onAdd(bookData);
+      setForm(initialState);
+    } catch (err) {
+      setError(err.message);
     }
+  };
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
-
-    return (
-        <div>
-            <h2>Item List</h2>
-            <ul>
-                {items.map(item => (
-                    <li key={item._id}>{item.name}</li>
-                ))}
-            </ul>
-            <form onSubmit={handleSubmit} style={{ marginTop: 20 }}>
-                <input name="title" value={form.title} onChange={handleChange} placeholder="Title" required />
-                <input name="author" value={form.author} onChange={handleChange} placeholder="Author" />
-                <select name="rating" value={form.rating} onChange={handleChange}>
-                    {[1,2,3,4,5].map(r => <option key={r} value={r}>{r}⭐</option>)}
-                </select>
-                <select name="status" value={form.status} onChange={handleChange}>
-                    <option>Started</option>
-                    <option>In Progress</option>
-                    <option>Complete</option>
-                </select>
-                <input name="notes" value={form.notes} onChange={handleChange} placeholder="Notes" />
-                <button type="submit">Add Book</button>
-            </form>
-        </div>
-    );
+  return (
+    <form onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
+      <input
+        name="title"
+        value={form.title}
+        onChange={handleChange}
+        placeholder="Title"
+        required
+      />
+      <input
+        name="author"
+        value={form.author}
+        onChange={handleChange}
+        placeholder="Author"
+      />
+      <input
+        name="year"
+        value={form.year}
+        onChange={handleChange}
+        placeholder="Year (optional)"
+        type="number"
+        min="0"
+      />
+      <button type="submit">Add Book</button>
+      {error && <div style={{ color: 'red' }}>Error: {error}</div>}
+    </form>
+  );
 };
 
-export default ItemList;
+export default AddBookForm;
